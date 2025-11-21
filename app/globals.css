@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+:root {
+  --background: #000000; /* Pure black */
+  --foreground: #ffffff; /* White text */
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* Neon + glow utilities */
+.shadow-neon {
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.35), 0 0 24px rgba(109, 40, 217, 0.25);
+}
+.shadow-neon-strong {
+  box-shadow: 0 0 18px rgba(168, 85, 247, 0.55), 0 0 36px rgba(109, 40, 217, 0.45);
+}
+.drop-shadow-neon {
+  filter: drop-shadow(0 0 12px rgba(168, 85, 247, 0.5));
+}
+
+/* Animated underline for nav links */
+.neon-link { position: relative; }
+.neon-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 2px;
+  width: 0;
+  background: linear-gradient(to right, #6d28d9, #a855f7);
+  box-shadow: 0 0 8px rgba(168, 85, 247, 0.6);
+  transition: width 200ms ease;
+}
+.neon-link:hover::after { width: 100%; }
+
+/* Subtle glow backdrop for hero */
+.glow-bg {
+  background: radial-gradient(ellipse at center, rgba(168,85,247,0.15), rgba(0,0,0,0) 60%);
+}
+
+/* 3D perspective utility */
+.perspective-1000 { perspective: 1000px; }
