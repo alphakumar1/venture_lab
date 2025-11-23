@@ -50,3 +50,12 @@ body {
 
 /* 3D perspective utility */
 .perspective-1000 { perspective: 1000px; }
+
+/* Visually hide scrollbar while keeping accessibility */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
