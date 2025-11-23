@@ -1,8 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { APIProvider, Map, AdvancedMarker } from "@vis.gl/react-google-maps";
-
 import {
   Mail,
   Phone,
@@ -12,11 +10,12 @@ import {
   Twitter,
   Instagram,
   ArrowRight,
-  LucideIcon,
   Linkedin,
 } from "lucide-react";
 
 // --- Type Definitions ---
+
+type IconType = React.ComponentType<any>;
 
 interface FormInputProps {
   type?: string;
@@ -27,7 +26,7 @@ interface FormInputProps {
 }
 
 interface InfoItemProps {
-  Icon: LucideIcon;
+  Icon: IconType;
   title: string;
   content: string;
   link: string;
@@ -81,9 +80,7 @@ const ContactForm: React.FC = () => {
     // Mock API call delay
     setTimeout(() => {
       setIsSubmitting(false);
-      setMessage(
-        "Thank you for contacting us! We will get back to you shortly."
-      );
+      setMessage("Thank you for contacting us! We will get back to you shortly.");
       (e.target as HTMLFormElement).reset();
     }, 2000);
   };
@@ -96,12 +93,7 @@ const ContactForm: React.FC = () => {
       <h1 className="mt-1 text-4xl font-extrabold text-white">Get In Touch</h1>
 
       <form onSubmit={handleSubmit} className="mt-8">
-        <FormInput
-          label="Name"
-          name="name"
-          placeholder="Your Name..."
-          required
-        />
+        <FormInput label="Name" name="name" placeholder="Your Name..." required />
         <FormInput
           label="Email"
           name="email"
@@ -135,9 +127,7 @@ const ContactForm: React.FC = () => {
         {message && (
           <p
             className={`mt-4 text-center text-sm ${
-              message.startsWith("Thank you")
-                ? "text-green-400"
-                : "text-amber-400"
+              message.startsWith("Thank you") ? "text-green-400" : "text-amber-400"
             }`}
           >
             {message}
@@ -164,8 +154,9 @@ const InfoItem: React.FC<InfoItemProps> = ({ Icon, title, content, link }) => (
 
 // Main Application Component
 const App: React.FC = () => {
-  // Utility for map placeholder
-  const mapImageUrl: string ="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3498.9946538933773!2d77.06351547515897!3d28.719705775617317!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d068dbf44ecd7%3A0xc4ce5551f8ac8360!2sMaharaja%20Agrasen%20Institute%20Of%20Technology(MAIT)!5e0!3m2!1sen!2sin!4v1763892261394!5m2!1sen!2sin";
+  // Utility for map placeholder (embed URL is fine in iframe src)
+  const mapImageUrl: string =
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3498.9946538933773!2d77.06351547515897!3d28.719705775617317!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d068dbf44ecd7%3A0xc4ce5551f8ac8360!2sMaharaja%20Agrasen%20Institute%20Of%20Technology(MAIT)!5e0!3m2!1sen!2sin!4v1763892261394!5m2!1sen!2sin";
 
   // Utility for contact placeholder
   const contactImageUrl: string =
@@ -179,23 +170,18 @@ const App: React.FC = () => {
   const handleImageError: React.ReactEventHandler<HTMLImageElement> = (e) => {
     const target = e.target as HTMLImageElement;
     target.onerror = null;
-    target.src =
-      "https://placehold.co/400x200/18181b/ffffff?text=Map+Unavailable";
+    target.src = "https://placehold.co/400x200/18181b/ffffff?text=Map+Unavailable";
   };
 
   return (
     <div className="min-h-screen font-sans bg-black-900 text-gray-100">
       {/* Main Content Header */}
       <header
-        className="py-24 text-center relative py-24 mt-16 overflow-hidden bg-cover bg-center"
+        className="py-24 text-center relative mt-16 overflow-hidden bg-cover bg-center"
         style={{ backgroundImage: `url(${contactImageUrl})` }}
       >
-        <h1 className="text-5xl font-extrabold text-white sm:text-6xl">
-          Contact Us
-        </h1>
-        <p className="mt-2 text-lg text-gray-400">
-          We're ready to hear from you.
-        </p>
+        <h1 className="text-5xl font-extrabold text-white sm:text-6xl">Contact Us</h1>
+        <p className="mt-2 text-lg text-gray-400">We're ready to hear from you.</p>
       </header>
 
       {/* Main Contact Section */}
@@ -210,9 +196,8 @@ const App: React.FC = () => {
           <div className="lg:col-span-2">
             {/* Introductory Text */}
             <p className="max-w-xl mb-12 text-gray-300 text-md">
-              "Have an idea, question, or feedback? Reach out to us anytime —
-              we’re always here to help. Let’s create something amazing
-              together."
+              Have an idea, question, or feedback? Reach out to us anytime — we’re always here to help.
+              Let’s create something amazing together.
             </p>
 
             {/* Contact Details Grid */}
@@ -227,7 +212,7 @@ const App: React.FC = () => {
                 Icon={Mail}
                 title="Email Address"
                 content="kartik1909singh@gmail.com"
-                link="kartik1909singh@gmail.com"
+                link="mailto:kartik1909singh@gmail.com"
               />
               <InfoItem
                 Icon={Smartphone}
@@ -246,7 +231,7 @@ const App: React.FC = () => {
             {/* Map Placeholder */}
             <div className="mt-8 overflow-hidden rounded-xl shadow-lg border-4 border-black">
               <iframe
-                title="Office Location Map"                
+                title="Office Location Map"
                 src={mapImageUrl}
                 width="100%"
                 height="250"
@@ -267,9 +252,7 @@ const App: React.FC = () => {
         <div className="absolute inset-0 bg-black opacity-60"></div>
 
         <div className="relative z-10 text-center container mx-auto px-4">
-          <h2 className="text-sm font-semibold tracking-widest text-white uppercase">
-            Hire Us Now
-          </h2>
+          <h2 className="text-sm font-semibold tracking-widest text-white uppercase">Hire Us Now</h2>
           <h1 className="mt-4 text-5xl font-extrabold text-white sm:text-6xl max-w-4xl mx-auto leading-tight">
             We Are Always Ready To Take A Perfect Shot
           </h1>
@@ -288,33 +271,19 @@ const App: React.FC = () => {
             <div className="col-span-2 lg:col-span-2">
               <Logo />
               <p className="max-w-xs mt-4 text-sm text-gray-500">
-                "We are the innovation engine, transforming disruptive ideas
-                into viable, market-ready businesses. Partner with us to build
-                the future of technology."
+                We are the innovation engine, transforming disruptive ideas into viable, market-ready businesses. Partner with us to build the future of technology.
               </p>
               <div className="flex mt-4 space-x-3">
-                <a
-                  href="#"
-                  className="p-2 transition duration-300 rounded-full text-gray-400 bg-gray-800 hover:text-amber-500 hover:bg-gray-700"
-                >
+                <a href="#" className="p-2 transition duration-300 rounded-full text-gray-400 bg-gray-800 hover:text-amber-500 hover:bg-gray-700">
                   <Facebook className="w-5 h-5" />
                 </a>
-                <a
-                  href="#"
-                  className="p-2 transition duration-300 rounded-full text-gray-400 bg-gray-800 hover:text-amber-500 hover:bg-gray-700"
-                >
+                <a href="#" className="p-2 transition duration-300 rounded-full text-gray-400 bg-gray-800 hover:text-amber-500 hover:bg-gray-700">
                   <Twitter className="w-5 h-5" />
                 </a>
-                <a
-                  href="https://www.instagram.com/startup_sphere/?__pwa=1"
-                  className="p-2 transition duration-300 rounded-full text-gray-400 bg-gray-800 hover:text-amber-500 hover:bg-gray-700"
-                >
+                <a href="https://www.instagram.com/startup_sphere/?__pwa=1" className="p-2 transition duration-300 rounded-full text-gray-400 bg-gray-800 hover:text-amber-500 hover:bg-gray-700">
                   <Instagram className="w-5 h-5" />
                 </a>
-                <a
-                  href="#"
-                  className="p-2 transition duration-300 rounded-full text-gray-400 bg-gray-800 hover:text-amber-500 hover:bg-gray-700"
-                >
+                <a href="#" className="p-2 transition duration-300 rounded-full text-gray-400 bg-gray-800 hover:text-amber-500 hover:bg-gray-700">
                   <Linkedin className="w-5 h-5" />
                 </a>
               </div>
@@ -325,36 +294,16 @@ const App: React.FC = () => {
               <h4 className="text-lg font-semibold text-white">Our Store</h4>
               <ul className="mt-4 space-y-2 flex-col">
                 <li>
-                  <a
-                    href="#"
-                    className="text-sm text-gray-400 hover:text-amber-500"
-                  >
-                    Home
-                  </a>
+                  <a href="#" className="text-sm text-gray-400 hover:text-amber-500">Home</a>
                 </li>
                 <li>
-                  <a
-                    href="#"
-                    className="text-sm text-gray-400 hover:text-amber-500"
-                  >
-                    About
-                  </a>
+                  <a href="#" className="text-sm text-gray-400 hover:text-amber-500">About</a>
                 </li>
                 <li>
-                  <a
-                    href="#"
-                    className="text-sm text-gray-400 hover:text-amber-500"
-                  >
-                    Contact
-                  </a>
+                  <a href="#" className="text-sm text-gray-400 hover:text-amber-500">Contact</a>
                 </li>
                 <li>
-                  <a
-                    href="#"
-                    className="text-sm text-gray-400 hover:text-amber-500"
-                  >
-                    Service
-                  </a>
+                  <a href="#" className="text-sm text-gray-400 hover:text-amber-500">Service</a>
                 </li>
               </ul>
             </div>
@@ -376,8 +325,8 @@ const App: React.FC = () => {
                   <span>+91 82877 84380</span>
                 </li>
                 <li className="flex items-start">
-                  <Mail className="flex w-5 h-5 mt-1 mr-3 text-amber-500" />
-                  <span>kartik1909singh</span>
+                  <Mail className="shrink-0 w-5 h-5 mt-1 mr-3 text-amber-500" />
+                  <span>kartik1909singh@gmail.com</span>
                 </li>
               </ul>
             </div>
@@ -385,9 +334,7 @@ const App: React.FC = () => {
 
           {/* Copyright */}
           <div className="pt-8 mt-10 text-center border-t border-black">
-            <p className="text-xs text-gray-500">
-              Copyright © 2025 Venture Lab | Powered by Venture Lab
-            </p>
+            <p className="text-xs text-gray-500">Copyright © 2025 Venture Lab | Powered by Venture Lab</p>
           </div>
         </div>
       </footer>
