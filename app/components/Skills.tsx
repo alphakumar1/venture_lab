@@ -69,8 +69,8 @@ export default function Skills() {
     return items.map((skill, index) => {
       const angle = (2 * Math.PI * index) / items.length - Math.PI / 2; // start at top
 
-      const baseX = centerX + orbitRadius * Math.cos(angle);
-      const baseY = centerY + orbitRadius * Math.sin(angle);
+      const baseX = centerX + orbitRadius * Math.cos(angle) - 30;
+      const baseY = centerY + orbitRadius * Math.sin(angle) - 30;
 
       let offsetX = 0;
       let offsetY = 0;
@@ -121,18 +121,18 @@ export default function Skills() {
   // choose orbit sizes based on container (so it never overflows)
   const minDim = Math.min(size.w, size.h);
   // make orbits bigger: less padding from edges
-  const outerRadius = minDim / 2 - 40; // was -80
+  const outerRadius = minDim / 2 - 10;
   const innerRadius = outerRadius * 0.62;
 
   return (
     <section
       id="skills"
-      className="w-full min-h-screen flex items-center justify-center"
+      className="w-full md:min-h-screen flex items-center justify-center py-12 md:py-0"
     >
       <div className="mx-auto w-full max-w-6xl px-6">
         <div
           ref={containerRef}
-          className="relative mx-auto w-full max-w-4xl aspect-square"
+          className="relative mx-auto w-full max-w-4xl aspect-[3/2] md:aspect-square"
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
         >
