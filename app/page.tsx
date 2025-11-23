@@ -1,5 +1,7 @@
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
+import Skills from "./components/Skills";
+
 import ProjectsSection from "./components/ProjectsSection";
 import Footer from "./components/Footer";
 
@@ -11,6 +13,7 @@ export default function Home() {
       <main className="flex min-h-screen items-center justify-center pt-20">
         <div className="w-full max-w-5xl px-6 flex flex-col items-center text-center gap-16">
           <Hero />
+          <Skills /> 
           <ProjectsSection />
           <Footer />
         </div>
