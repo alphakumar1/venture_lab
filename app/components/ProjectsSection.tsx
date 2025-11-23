@@ -5,19 +5,19 @@ import ProjectCard from "./ProjectCard";
 
 const projects = [
   {
-    title: "Startup Match",
-    description: "Match founders and ideas with shared goals.",
-    imageSrc: "/globe.svg",
+    title: "CodeCap",
+    description: "Codecap is designed to empower students by offering a space",
+    imageSrc: "/CodeCap.png",
   },
   {
-    title: "Market Radar",
-    description: "Lightweight trends and competitor scanning tool.",
-    imageSrc: "/globe.svg",
+    title: "Campusmart",
+    description: "Join your campus community today and discover a smarter way to buy and sell.",
+    imageSrc: "/campusmart.png",
   },
   {
-    title: "Pitch Helper",
-    description: "Turn research into crisp slides and one-pagers.",
-    imageSrc: "/globe.svg",
+    title: "Zeber",
+    description: "AI solutions provider that delivers customized AI automation for businesses. ",
+    imageSrc: "/zeber.png",
   },
 ];
 
