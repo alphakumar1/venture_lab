@@ -53,18 +53,19 @@ const teamMembers: TeamMember[] = [
     {
         name: 'Kartik Singh',
         title: 'Head',
-        image: 'https://media.licdn.com/dms/image/v2/D5603AQHPvF9dTmUZfA/profile-displayphoto-crop_800_800/B56ZhBV8dSHUAI-/0/1753442929996?e=1765411200&v=beta&t=wUuvlUxAVtFRAgcLlxDl4BII5y5j7_abdltcaAH6geA',
+        image: '/assets/kartik.png',
     },
     {
         name: 'Shubham Solanki',
         title: 'Co-Head',
-        image: 'https://media.licdn.com/dms/image/v2/D4D03AQGG51UkVP8aew/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1732520079133?e=1765411200&v=beta&t=FasUXxhIVGnZ8Pu3NxOGDwdHRS_N7ciH_5HC4ZygjB0',
-    }
+        image: '/assets/shubham.png',
+    },
 ];
 
 // --- STYLING ---
-const CustomStyles = () => (
-    <style>{`
+function CustomStyles() {
+    return (
+        <style>{`
         .header-bg {
             background-image: url('https://i.pinimg.com/736x/08/00/c1/0800c1a670b7e070d55bef3b1bfb4b57.jpg');
             background-size: cover;
@@ -85,7 +86,8 @@ const CustomStyles = () => (
             height: 20rem;
         }
     `}</style>
-);
+    );
+}
 
 export default function App() {
     return (
@@ -105,7 +107,7 @@ export default function App() {
             </header>
 
             {/* WE ARE Venture */}
-            <section className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-black shadow-lg rounded-lg -mt-20 relative z-10">
+            <section id="about" className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-black shadow-lg rounded-lg -mt-20 relative z-10">
                 <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-12">
                     WE ARE <span className="text-purple-600">Venture</span>
                 </h2>
@@ -127,7 +129,7 @@ export default function App() {
                     </div>
                     <div className="rounded-lg overflow-hidden shadow-2xl">
                         <img
-                            src="https://media.licdn.com/dms/image/v2/D5635AQFrQvRIFWhcrw/profile-framedphoto-shrink_800_800/B56ZpSnto9J4Ag-/0/1762322733915?e=1764496800&v=beta&t=_EedOBKEcH1arl_DbDbfBlPU7ucjSEJb78laDDZYN6U" alt="Portrait of a Umbra executive"
+                            src="assets/shubhamraj.png" alt="Portrait of a Umbra executive"
                             className="w-full h-auto object-cover grayscale-image"
                             onError={(e) => { e.currentTarget.src = 'https://placehold.co/600x400/8B5CF6/ffffff?text=Image+Placeholder' }}
                         />
@@ -201,7 +203,7 @@ export default function App() {
                         </div>
                     ))}
                     </div>
-                    <button className="mt-8  mx-auto space-x-2 px-8 py-3 text-base font-semibold text-gray-900 bg-purple-700 rounded-lg shadow-xl hover:bg-purple-400 transition duration-300 transform hover:scale-[1.03] active:scale-100">
+                    <button id="members" className="mt-8  mx-auto space-x-2 px-8 py-3 text-base font-semibold text-gray-900 bg-purple-700 rounded-lg shadow-xl hover:bg-purple-400 transition duration-300 transform hover:scale-[1.03] active:scale-100">
                         <span>More Members..</span>
                     </button>
             </section>

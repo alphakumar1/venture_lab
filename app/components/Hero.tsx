@@ -26,8 +26,22 @@ export default function Hero() {
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
           className="mt-4 max-w-2xl mx-auto text-lg text-white/70 text-center"
         >
-          Where student ideas become real startups. Minimal, modern, and futuristic.
+          Where student ideas become real startups.
         </motion.p>
+        <motion.div
+       initial={{ opacity: 0, y: 10 }}
+       whileInView={{ opacity: 1, y: 0 }}
+       viewport={{ once: true }}
+       transition={{ duration: 0.5, ease: "easeOut", delay: 0.15 }}
+       className="mt-3 flex items-center justify-center gap-4 text-sm sm:text-base font-semibold tracking-widest text-white/80"
+>
+  <span>Innovate</span>
+  <span className="text-white/40">•</span>
+  <span>Build</span>
+  <span className="text-white/40">•</span>
+  <span>Launch</span>
+</motion.div>
+
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}

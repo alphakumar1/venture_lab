@@ -7,9 +7,15 @@ interface ProjectCardProps {
   title: string;
   description: string;
   imageSrc?: string;
+  link: string;
 }
 
-export default function ProjectCard({ title, description, imageSrc = "/globe.svg" }: ProjectCardProps) {
+export default function ProjectCard({
+  title,
+  description,
+  imageSrc = "/globe.svg",
+  link,
+}: ProjectCardProps) {
   return (
     <motion.div
       whileHover={{ rotateX: 3, rotateY: -3 }}
@@ -26,15 +32,21 @@ export default function ProjectCard({ title, description, imageSrc = "/globe.svg
           sizes="144px"
         />
       </div>
+
       <h3 className="mt-4 text-lg font-semibold text-white">{title}</h3>
       <p className="mt-1 text-sm text-white/70">{description}</p>
+
       <div className="mt-4 flex items-center justify-center gap-3">
-        <button className="inline-flex items-center justify-center rounded-md border border-white/10 px-3 py-1.5 text-xs text-white hover:border-white/20 hover:shadow-neon/50 transition">
-          Demo
-        </button>
-        <button className="inline-flex items-center justify-center rounded-md px-3 py-1.5 text-xs text-white bg-gradient-to-r from-[#6d28d9] to-[#a855f7] shadow-neon hover:scale-[1.03] transition-transform">
-          Details
-        </button>
+        <a
+          href={link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center rounded-md px-3 py-1.5 text-xs text-white 
+                     bg-gradient-to-r from-[#6d28d9] to-[#a855f7] shadow-neon 
+                     hover:scale-[1.03] transition-transform"
+        >
+          Launch Project 🚀
+        </a>
       </div>
     </motion.div>
   );

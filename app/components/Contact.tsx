@@ -185,7 +185,9 @@ const App: React.FC = () => {
       </header>
 
       {/* Main Contact Section */}
-      <main className="container px-4 py-12 mx-auto sm:px-6 lg:px-8">
+      <main 
+     id="contact"
+     className="container px-4 py-12 mx-auto sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
           {/* Contact Form */}
           <div className="lg:col-span-1">
