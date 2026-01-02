@@ -21,7 +21,7 @@ export const members: Member[] = [
   {
     name: "Parth Shukla",
     role: "Member",
-    linkedin: "www.linkedin.com/in/parth-shukla-97925a332",
+    linkedin: "https://www.linkedin.com/in/parth-shukla-97925a332/",
     github: "https://github.com/loookla",
   },
   {

@@ -144,9 +144,8 @@ export default function Skills() {
 
   // choose orbit sizes based on container (so it never overflows)
   const minDim = Math.min(size.w, size.h);
-  const orbitBoxSize = Math.max(52, Math.min(68, Math.round(minDim * 0.12)));
-  // keep enough padding so icons never clip outside container
-  const outerRadius = Math.max(0, minDim / 2 - orbitBoxSize / 2 - 0);
+  // make orbits bigger: less padding from edges
+  const outerRadius = minDim / 2 - 10;
   const innerRadius = outerRadius * 0.62;
 
   return (

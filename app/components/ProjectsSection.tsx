@@ -5,24 +5,20 @@ import ProjectCard from "./ProjectCard";
 
 const projects = [
   {
-    title: "CodeCap",
-    description: "Codecap is designed to empower students by offering a intellectual space",
-    imageSrc: "/assets/CodeCap.png",
-    link: "https://www.linkedin.com/company/codecap-community/?originalSubdomain=in",
+    title: "Startup Match",
+    description: "Match founders and ideas with shared goals.",
+    imageSrc: "/globe.svg",
   },
   {
-    title: "Campusmart",
-    description: "Smarter way to buy or sell inside your college campus.",
-    imageSrc: "/assets/campusmart.png",
-    link: "https://www.campusmart.store",
-
+    title: "Market Radar",
+    description: "Lightweight trends and competitor scanning tool.",
+    imageSrc: "/globe.svg",
   },
   {
-    title: "Zeber",
-    description: "AI solutions provider that delivers customized AI automation for businesses. ",
-    imageSrc: "/assets/zeber.png",
-    link: "https://zeber.in",
- },
+    title: "Pitch Helper",
+    description: "Turn research into crisp slides and one-pagers.",
+    imageSrc: "/globe.svg",
+  },
 ];
 
 export default function ProjectsSection() {
