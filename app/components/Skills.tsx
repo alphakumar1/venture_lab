@@ -83,8 +83,8 @@ export default function Skills() {
     floatOffset: number,
     boxSize: number
   ) => {
-    const centerX = size.w / 2;
-    const centerY = size.h / 2;
+    const centerX = size.w / 2 - 38;
+    const centerY = size.h / 2 - 20;
 
     const interactionRadius = orbitRadius * interactionRadiusFactor; // how far "attraction" works
     const maxOffset = 14; // max pixels icon moves toward mouse (subtle now)
