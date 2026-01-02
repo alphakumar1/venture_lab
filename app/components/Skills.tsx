@@ -20,10 +20,32 @@ const innerSkills = [
 
 type Skill = { id: string; name: string; icon: string };
 
+function useMediaQuery(query: string) {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mql = window.matchMedia(query);
+    const onChange = () => setMatches(mql.matches);
+    onChange();
+
+    if (typeof mql.addEventListener === "function") {
+      mql.addEventListener("change", onChange);
+      return () => mql.removeEventListener("change", onChange);
+    }
+
+    mql.addListener(onChange);
+    return () => mql.removeListener(onChange);
+  }, [query]);
+
+  return matches;
+}
+
 export default function Skills() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [size, setSize] = useState({ w: 800, h: 450 });
   const [mouse, setMouse] = useState<{ x: number; y: number } | null>(null);
+  const isDesktopOrbit = useMediaQuery("(min-width: 768px)");
 
   // track container size so orbits always fit nicely
   useEffect(() => {
@@ -58,7 +80,8 @@ export default function Skills() {
     items: Skill[],
     orbitRadius: number,
     interactionRadiusFactor: number,
-    floatOffset: number
+    floatOffset: number,
+    boxSize: number
   ) => {
     const centerX = size.w / 2;
     const centerY = size.h / 2;
@@ -69,8 +92,8 @@ export default function Skills() {
     return items.map((skill, index) => {
       const angle = (2 * Math.PI * index) / items.length - Math.PI / 2; // start at top
 
-      const baseX = centerX + orbitRadius * Math.cos(angle) - 30;
-      const baseY = centerY + orbitRadius * Math.sin(angle) - 30;
+      const baseX = centerX + orbitRadius * Math.cos(angle);
+      const baseY = centerY + orbitRadius * Math.sin(angle);
 
       let offsetX = 0;
       let offsetY = 0;
@@ -112,6 +135,7 @@ export default function Skills() {
             skill={skill}
             index={index}
             floatingOffset={floatOffset}
+            boxSize={boxSize}
           />
         </motion.div>
       );
@@ -120,8 +144,9 @@ export default function Skills() {
 
   // choose orbit sizes based on container (so it never overflows)
   const minDim = Math.min(size.w, size.h);
-  // make orbits bigger: less padding from edges
-  const outerRadius = minDim / 2 - 10;
+  const orbitBoxSize = Math.max(52, Math.min(68, Math.round(minDim * 0.12)));
+  // keep enough padding so icons never clip outside container
+  const outerRadius = Math.max(0, minDim / 2 - orbitBoxSize / 2 - 14);
   const innerRadius = outerRadius * 0.62;
 
   return (
@@ -130,11 +155,48 @@ export default function Skills() {
       className="w-full md:min-h-screen flex items-center justify-center py-12 md:py-0"
     >
       <div className="mx-auto w-full max-w-6xl px-6">
+        {/* Mobile: simple, readable layout */}
+        <div className="md:hidden">
+          <div className="relative mx-auto w-full max-w-2xl rounded-3xl border border-white/10 bg-black/30 px-5 py-8 backdrop-blur">
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-[-10%] opacity-80"
+              style={{
+                background:
+                  "radial-gradient(circle at 50% 40%, rgba(109,40,217,0.35), transparent 65%)",
+              }}
+            />
+
+            <div className="relative z-10 flex flex-col items-center text-center">
+              <span className="text-[10px] uppercase tracking-[0.35em] text-white/45">
+                Venture Lab
+              </span>
+              <span className="mt-1 text-base font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#e5deff] to-white">
+                Skills
+              </span>
+            </div>
+
+            <div className="relative z-10 mt-7 flex flex-wrap justify-center gap-x-6 gap-y-7">
+              {[...outerSkills, ...innerSkills].map((skill, index) => (
+                <MagneticSkillIcon
+                  key={skill.id}
+                  skill={skill}
+                  index={index}
+                  floatingOffset={0}
+                  boxSize={56}
+                  disableFloat
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop/tablet: orbit layout */}
         <div
           ref={containerRef}
-          className="relative mx-auto w-full max-w-4xl aspect-[3/2] md:aspect-square"
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
+          className="relative mx-auto hidden w-full max-w-4xl aspect-square md:block"
+          onMouseMove={isDesktopOrbit ? handleMouseMove : undefined}
+          onMouseLeave={isDesktopOrbit ? handleMouseLeave : undefined}
         >
           {/* soft bg glow behind the whole system */}
           <div
@@ -196,8 +258,8 @@ export default function Skills() {
           </motion.div>
 
           {/* skill icons on orbits */}
-          {renderRing(outerSkills, outerRadius, 1.1, 0)}
-          {renderRing(innerSkills, innerRadius, 1.15, 1)}
+          {renderRing(outerSkills, outerRadius, 1.1, 0, orbitBoxSize)}
+          {renderRing(innerSkills, innerRadius, 1.15, 1, orbitBoxSize)}
 
           {/* tiny ambient dust */}
           <AmbientDots />
@@ -211,28 +273,44 @@ type IconProps = {
   skill: Skill;
   index: number;
   floatingOffset: number;
+  boxSize: number;
+  disableFloat?: boolean;
 };
 
-function MagneticSkillIcon({ skill, index, floatingOffset }: IconProps) {
+function MagneticSkillIcon({
+  skill,
+  index,
+  floatingOffset,
+  boxSize,
+  disableFloat,
+}: IconProps) {
   const floatAnim = {
     y: [0, -6 - floatingOffset * 1.5, 0],
   };
+
+  const iconSize = Math.max(26, Math.round(boxSize * 0.56));
 
   return (
     <motion.button
       type="button"
       className="group relative flex flex-col items-center gap-2 outline-none"
-      animate={floatAnim}
-      transition={{
-        duration: 4 + floatingOffset * 0.6,
-        repeat: Infinity,
-        ease: "easeInOut",
-        delay: index * 0.2,
-      }}
+      animate={disableFloat ? undefined : floatAnim}
+      transition={
+        disableFloat
+          ? undefined
+          : {
+              duration: 4 + floatingOffset * 0.6,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: index * 0.2,
+            }
+      }
     >
       <div
-        className="relative flex h-16 w-16 items-center justify-center rounded-full border border-white/12 bg-black/80 backdrop-blur-md transition-transform duration-200 group-hover:scale-110 group-focus-visible:scale-110"
+        className="relative flex items-center justify-center rounded-full border border-white/12 bg-black/80 backdrop-blur-md transition-transform duration-200 group-hover:scale-110 group-focus-visible:scale-110"
         style={{
+          width: boxSize,
+          height: boxSize,
           boxShadow:
             "0 18px 45px rgba(15,23,42,0.9), 0 0 0 0 rgba(168,85,247,0.0)",
         }}
@@ -250,8 +328,8 @@ function MagneticSkillIcon({ skill, index, floatingOffset }: IconProps) {
         <Image
           src={skill.icon}
           alt={skill.name}
-          width={36}
-          height={36}
+          width={iconSize}
+          height={iconSize}
           className="relative z-10 object-contain"
         />
       </div>
